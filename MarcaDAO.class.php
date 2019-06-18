@@ -7,8 +7,12 @@ require_once "Marca.class.php";
  * Classe MarcaDAO responsável por realizar: SELECT, INSERT, DELETE e UPDATE no DB
  */
 class MarcaDAO {
+
+    const TIPO_NUMERO = 1;
+    const TIPO_STRING = 2;
  
-    public function inserir(Marca $marca) {
+    public function insert(Marca $marca)
+    {
         try {
             $sql = ""
                 . "INSERT INTO marca (descricao) VALUES(:descricao)";
@@ -21,81 +25,70 @@ class MarcaDAO {
                 return [true, "Inserido com Sucesso"];
             else
                 return [false, "Erro ao Inserir"];
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             return [false, 'Error: ' . $e->getMessage())];
         }
     }
 
+    public function update(Marca $marca)
+    {
+        try {
+            $sql = ""
+                . "UPDATE marca SET descricao = :descricao WHERE codigo = :codigo";
+            $stmt = Conexao::startConnection()->prepare($sql);
+            $stmt->bindParam(':descricao', $marca->getDescricao(), PDO::PARAM_STR);
 
+            return [true, $stmt->execute() . " Row Count: " . $stmt->rowCount()];
+        } catch (PDOException $e) {
+            return [false, 'Error: ' . $e->getMessage())];
+        }
+    }
+
+    public function delete($ID)
+    {
+        try {
+            $sql = ""
+                . "DELETE FROM marca WHERE codigo = :id";
+            $stmt = Conexao::startConnection()->prepare($sql);
+            $stmt->bindParam(':id', $ID);
+
+            $stmt->execute();
+            if ($stmt->rowCount())
+                return [true, "Deletado com Sucesso"];
+            else
+                return [false, "Erro ao Deletar"];
+        } catch (PDOException $e) {
+            return [false, 'Error: ' . $e->getMessage())];
+        }
+    }
+
+    public function select($campoBusca, $tipo, $valorBusca)
+    {
+        try {
+            if ($campoBusca && $tipo && $valorBusca) {
+                // POSSUI PARAMETROS
+                if ($tipo == self::TIPO_NUMERO) {
+                    $sql = ""
+                        . "SELECT * FROM marca WHERE " . $campoBusca . " = :valor";
+                } elseif ($tipo == self::TIPO_STRING) {
+                    $sql = ""
+                        . "SELECT * FROM marca WHERE " . $campoBusca . " LIKE :valor";
+                }
+                $stmt = Conexao::startConnection()->prepare($sql);
+                $stmt->bindValue(':valor', "%" . $valorBusca . "%", PDO::PARAM_STR);
     
- 
-    public function Editar(PojoUsuario $usuario) {
-        try {
-            $sql = "UPDATE usuario set
-        nome = :nome,
-                email = :email,
-                senha = :senha,
-                ativo = :ativo,
-                cod_perfil = :cod_perfil WHERE cod_usuario = :cod_usuario";
- 
-            $p_sql = Conexao::getInstance()->prepare($sql);
- 
-            $p_sql->bindValue(":nome", $usuario->getNome());
-            $p_sql->bindValue(":email", $usuario->getEmail());
-            $p_sql->bindValue(":senha", $usuario->getSenha());
-            $p_sql->bindValue(":ativo", $usuario->getAtivo());
-            $p_sql->bindValue(":cod_perfil", $usuario->getPerfil()->
-getCod_perfil());
-            $p_sql->bindValue(":cod_usuario", $usuario->getCod_usuario());
- 
-            return $p_sql->execute();
-        } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-getCode() . " Mensagem: " . $e->getMessage());
+                $stmt->execute();
+    
+                $result = [];
+                while ($linha = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $result[] = "Código: {$linha['codigo']} - Descrição: {$linha['descricao']}";
+                }
+    
+                return [true, $result];
+            }
+            return [false, "Sem resultados. "];
+        } catch(PDOException $e) {
+            return [false, 'Error: ' . $e->getMessage())];
         }
     }
- 
-    public function Deletar($cod) {
-        try {
-            $sql = "DELETE FROM usuario WHERE cod_usuario = :cod";
-            $p_sql = Conexao::getInstance()->prepare($sql);
-            $p_sql->bindValue(":cod", $cod);
- 
-            return $p_sql->execute();
-        } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-getCode() . " Mensagem: " . $e->getMessage());
-        }
-    }
- 
-    public function BuscarPorCOD($cod) {
-        try {
-            $sql = "SELECT * FROM usuario WHERE cod_usuario = :cod";
-            $p_sql = Conexao::getInstance()->prepare($sql);
-            $p_sql->bindValue(":cod", $cod);
-            $p_sql->execute();
-            return $this->populaUsuario($p_sql->fetch(PDO::FETCH_ASSOC));
-        } catch (Exception $e) {
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
-            GeraLog::getInstance()->inserirLog("Erro: Código: " . $e->
-getCode() . " Mensagem: " . $e->getMessage());
-        }
-    }
-private function populaUsuario($row) {
-        $pojo = new PojoUsuario;
-        $pojo->setCod_usuario($row['cod_usuario']);
-        $pojo->setNome($row['nome']);
-        $pojo->setEmail($row['email']);
-        $pojo->setSenha($row['senha']);
-        $pojo->setAtivo($row['ativo']);
-        $pojo->setPerfil(ControllerPerfil::getInstance()-
-        >BuscarPorCOD($row['cod_perfil']));
-        return $pojo;
-    }
- 
 }
