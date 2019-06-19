@@ -5,11 +5,6 @@ class Marca {
     private $ID;
     private $descricao;
 
-    public function __construct($descricao) 
-    {
-        $this->setDescricao($descricao);
-    }
-
     /**
      * Get the value of ID
      */ 

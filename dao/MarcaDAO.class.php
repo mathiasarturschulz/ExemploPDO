@@ -1,7 +1,6 @@
 <?php
 
-require_once "Conexao.class.php";
-require_once "Marca.class.php";
+require_once "autoload.php";
 
 /**
  * Classe MarcaDAO responsável por realizar: SELECT, INSERT, DELETE e UPDATE no DB
@@ -10,6 +9,11 @@ class MarcaDAO {
 
     const TIPO_NUMERO = 1;
     const TIPO_STRING = 2;
+
+    const OPERADOR_MAIOR      = 1;
+    const OPERADOR_MAIORIGUAL = 2;
+    const OPERADOR_MENOR      = 3;
+    const OPERADOR_MENORIGUAL = 4;
  
     public function insert(Marca $marca)
     {
@@ -22,7 +26,6 @@ class MarcaDAO {
             $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
             $descricao = $marca->getDescricao();
 
-            //return $stmt->execute();
             $stmt->execute();
             if ($stmt->rowCount())
                 return [true, "Inserido com Sucesso"];
@@ -37,35 +40,41 @@ class MarcaDAO {
     {
         try {
             $sql = ""
-                . "UPDATE marca SET descricao = :descricao WHERE codigo = :codigo";
-            $stmt = Conexao::startConnection()->prepare($sql);
-            $stmt->bindParam(':descricao', $marca->getDescricao(), PDO::PARAM_STR);
+                . "UPDATE marca SET descricao = :descricao WHERE idMarca = :id";
+            $pdo = Conexao::startConnection();
+            $stmt = $pdo->prepare($sql);
 
-            return [true, $stmt->execute() . " Row Count: " . $stmt->rowCount()];
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $id = $marca->getID();
+            
+            $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+            $descricao = $marca->getDescricao();
+
+            $stmt->execute();
+            return [true, "Atualizado com Sucesso"];
         } catch (PDOException $e) {
             return [false, 'Error: ' . $e->getMessage()];
         }
     }
 
-    public function delete($ID)
+    public function delete($IDMarca)
     {
         try {
             $sql = ""
-                . "DELETE FROM marca WHERE codigo = :id";
-            $stmt = Conexao::startConnection()->prepare($sql);
-            $stmt->bindParam(':id', $ID);
+                . "DELETE FROM marca WHERE idMarca = :id";
+            $pdo = Conexao::startConnection();
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $id = $IDMarca;
 
             $stmt->execute();
-            if ($stmt->rowCount())
-                return [true, "Deletado com Sucesso"];
-            else
-                return [false, "Erro ao Deletar"];
+            return [true, "Deletado com Sucesso"];
         } catch (PDOException $e) {
             return [false, 'Error: ' . $e->getMessage()];
         }
     }
 
-    public function select($campoBusca, $tipo, $valorBusca)
+    public function select($campoBusca, $tipo, $valorBusca, $operador = null)
     {
         try {
             if ($campoBusca && $tipo && $valorBusca) {
@@ -77,14 +86,16 @@ class MarcaDAO {
                     $sql = ""
                         . "SELECT * FROM marca WHERE " . $campoBusca . " LIKE :valor";
                 }
-                $stmt = Conexao::startConnection()->prepare($sql);
-                $stmt->bindValue(':valor', "%" . $valorBusca . "%", PDO::PARAM_STR);
+                $pdo = Conexao::startConnection();
+                $stmt = $pdo->prepare($sql);
+                $valor = "%" . $valorBusca . "%";
+                $stmt->bindValue(':valor', $valor, PDO::PARAM_STR);
     
                 $stmt->execute();
     
                 $result = [];
                 while ($linha = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $result[] = "Código: {$linha['codigo']} - Descrição: {$linha['descricao']}";
+                    $result[] = "ID: {$linha['idMarca']} - Descricao: {$linha['descricao']}";
                 }
     
                 return [true, $result];

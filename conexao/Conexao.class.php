@@ -4,7 +4,7 @@ class Conexao {
 
     private const DB_TYPE = 'mysql';
     private const DB_HOST = 'localhost';
-    private const DB_NAME = 'vendasimples';
+    private const DB_NAME = 'venda';
     private const DB_USER = 'root';
     private const DB_PASSWORD = '';
 
@@ -21,9 +21,6 @@ class Conexao {
             self::$conexao = new PDO(self::DB_TYPE . ':host=' . self::DB_HOST . ';dbname=' . self::DB_NAME, self::DB_USER, self::DB_PASSWORD);
             self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            echo "teste";
-            echo json_encode(self::$conexao);
-            echo "teste";
             return self::$conexao;
         } catch(PDOException $e) {
             return 'Error: ' . $e->getMessage();
