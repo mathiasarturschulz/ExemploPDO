@@ -16,10 +16,12 @@ class MarcaDAO {
         try {
             $sql = ""
                 . "INSERT INTO marca (descricao) VALUES(:descricao)";
-            $stmt = Conexao::startConnection();
-            $stmt->prepare($sql);
-            $stmt->bindParam(':descricao', $marca->getDescricao(), PDO::PARAM_STR);
- 
+            $pdo = Conexao::startConnection();
+            $stmt = $pdo->prepare($sql);
+            
+            $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+            $descricao = $marca->getDescricao();
+
             //return $stmt->execute();
             $stmt->execute();
             if ($stmt->rowCount())
