@@ -12,8 +12,8 @@ class Vendedor extends Pessoa {
     }
 
     public function __toString() {
-        return "--> Vendedor: <br>"
-                    . parent::__toString();
+        return " { Vendedor:"
+            . parent::__toString() . " } ";
     }
 }
 

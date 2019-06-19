@@ -1,0 +1,19 @@
+-- PHP Unit
+
+Try the following instructions:
+
+In the command prompt, switch to the directory that you installed PHP to by running cd C:\php\
+Then install PEAR by running php go-pear.phar
+Press Enter to accept the default when it asks you “Are you installing a system-wide PEAR or a local copy?”
+Press Enter again to accept the file layout.
+Press Enter to finish.
+Run the following commands (they may take a while to update, be patient):
+pear channel-update pear.php.net
+pear upgrade-all
+pear channel-discover pear.phpunit.de
+pear channel-discover components.ez.no
+pear channel-discover pear.symfony-project.com
+pear update-channels
+Clear your pear cache pear clear-cache
+To install PHPUnit, run pear install --alldeps --force phpunit/PHPUnit
+To test that PHPUnit was successfully installed, run phpunit -v

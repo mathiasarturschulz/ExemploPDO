@@ -51,9 +51,9 @@ class Marca {
     }
 
     public function __toString() {
-        return "{ Marca:"
+        return " { Marca:"
             . " | ID = " . $this->getID()
-            . " | Descricao = " . $this->getDescricao() . " }";
+            . " | Descricao = " . $this->getDescricao() . " } ";
     }
 }
 

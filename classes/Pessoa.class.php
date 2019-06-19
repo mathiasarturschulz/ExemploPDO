@@ -88,11 +88,11 @@ abstract class Pessoa {
     }
 
     public function __toString() {
-        return ""
-                    . "ID = " . $this->getId() . "<br>"
-                    . "Nome = " . $this->getNome() . "<br>"
-                    . "Usuario = " . $this->getUsuario() . "<br>"
-                    . "Senha = " . $this->getSenha() . "<br>";
+        return " { Pessoa:"
+            . " | ID = " . $this->getId()
+            . " | Nome = " . $this->getNome()
+            . " | Usuario = " . $this->getUsuario()
+            . " | Senha = " . $this->getSenha() . " } ";
     }
 }
 

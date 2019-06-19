@@ -213,16 +213,16 @@ class Cliente extends Pessoa {
     }
 
     public function __toString() {
-        return "--> Cliente: <br>"
-                    . parent::__toString()
-                    . "Rg = " . $this->getRg() . "<br>"
-                    . "Fone = " . $this->getFone() . "<br>"
-                    . "Email = " . $this->getEmail() . "<br>"
-                    . "Endereco = " . $this->getEndereco() . "<br>"
-                    . "Numero = " . $this->getNumero() . "<br>"
-                    . "Bairro = " . $this->getBairro() . "<br>"
-                    . "Cidade = " . $this->getCidade() . "<br>"
-                    . "Estado = " . $this->getEstado() . "<br>";
+        return " { Cliente:"
+            . parent::__toString()
+            . " | Rg = " . $this->getRg()
+            . " | Fone = " . $this->getFone()
+            . " | Email = " . $this->getEmail()
+            . " | Endereco = " . $this->getEndereco()
+            . " | Numero = " . $this->getNumero()
+            . " | Bairro = " . $this->getBairro()
+            . " | Cidade = " . $this->getCidade()
+            . " | Estado = " . $this->getEstado() . " } ";
     }
 }
 

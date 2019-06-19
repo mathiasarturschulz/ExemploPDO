@@ -60,3 +60,16 @@ $oMarcaDAO = new MarcaDAO();
 
 $oMarcaDAO->insert($oMarca);
 
+LOCK TABLES `produto` WRITE;
+/*!40000 ALTER TABLE `produto` DISABLE KEYS */;
+INSERT INTO `produto` VALUES (1,'Teclado',12.89,'12093102',2),(2,'Monitor',300.87,'12319283',1),(3,'Mouse',1.00,'1283192',2),(4,'Notebook',3000.00,'89273827398',5),(5,'Netbook',1000.00,'243573948',6);
+/*!40000 ALTER TABLE `produto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+LOCK TABLES `marca` WRITE;
+/*!40000 ALTER TABLE `marca` DISABLE KEYS */;
+INSERT INTO `marca` VALUES (1,'LG'),(2,'DELL'),(3,'APPLE'),(4,'MICROSOFT'),(5,'ASUS'),(6,'SAMSUNG'),(7,'ACER'),(8,'NOKIA');
+/*!40000 ALTER TABLE `marca` ENABLE KEYS */;
+UNLOCK TABLES;

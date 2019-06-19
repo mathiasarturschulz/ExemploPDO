@@ -203,14 +203,14 @@ class Venda {
 
     
     public function __toString() {
-        return "--> Venda: <br>"
-                    . "ID = " . $this->getId() . "<br>"
-                    . "Data = " . $this->getData()->format('d-m-Y') . "<br><br>"
-                    . "### Cliente = " . $this->getCliente() . "<br>"
-                    . "### Vendedor = " . $this->getVendedor() . "<br>"
-                    . "Data Vencimento = " . $this->getDataVencimento()->format('d-m-Y') . "<br>"
-                    . "Data Pagamento = " . $this->getDataPagamento()->format('d-m-Y') . "<br><br>"
-                    . "### Lista Produtos = <br>" . implode("", $this->getListaVendaProdutos()) . "<br>";
+        return " { Venda:"
+                    . " | ID = " . $this->getId()
+                    . " | Data = " . $this->getData()->format('d-m-Y')
+                    . " ### Cliente = " . $this->getCliente()
+                    . " ### Vendedor = " . $this->getVendedor()
+                    . " | Data Vencimento = " . $this->getDataVencimento()->format('d-m-Y')
+                    . " | Data Pagamento = " . $this->getDataPagamento()->format('d-m-Y')
+                    . " ### Lista Produtos = " . implode("", $this->getListaVendaProdutos()) . " } ";
     }
 }
 

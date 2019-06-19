@@ -51,9 +51,9 @@ class VendaProduto {
     }
 
     public function __toString() {
-        return "--> VendaProduto: <br>"
-                    . "Produto = " . $this->getProduto()
-                    . "Quantidade Produto = " . $this->getQuantidadeProduto() . "<br><br>";
+        return " { VendaProduto:"
+                    . " | Produto = " . $this->getProduto()
+                    . " | Quantidade Produto = " . $this->getQuantidadeProduto() . " } ";
     }
 }
 
