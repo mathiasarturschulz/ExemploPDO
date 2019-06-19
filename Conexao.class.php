@@ -12,7 +12,7 @@ class Conexao {
     public static $conexao;
 
     // getInstance
-    public function startConnection()
+    public static function startConnection()
     {
         if (isset(self::$conexao))
             return self::$conexao;

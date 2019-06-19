@@ -16,7 +16,8 @@ class MarcaDAO {
         try {
             $sql = ""
                 . "INSERT INTO marca (descricao) VALUES(:descricao)";
-            $stmt = Conexao::startConnection()->prepare($sql);
+            $stmt = Conexao::startConnection();
+            $stmt->prepare($sql);
             $stmt->bindParam(':descricao', $marca->getDescricao(), PDO::PARAM_STR);
  
             //return $stmt->execute();
@@ -26,7 +27,7 @@ class MarcaDAO {
             else
                 return [false, "Erro ao Inserir"];
         } catch (PDOException $e) {
-            return [false, 'Error: ' . $e->getMessage())];
+            return [false, 'Error: ' . $e->getMessage()];
         }
     }
 
@@ -40,7 +41,7 @@ class MarcaDAO {
 
             return [true, $stmt->execute() . " Row Count: " . $stmt->rowCount()];
         } catch (PDOException $e) {
-            return [false, 'Error: ' . $e->getMessage())];
+            return [false, 'Error: ' . $e->getMessage()];
         }
     }
 
@@ -58,7 +59,7 @@ class MarcaDAO {
             else
                 return [false, "Erro ao Deletar"];
         } catch (PDOException $e) {
-            return [false, 'Error: ' . $e->getMessage())];
+            return [false, 'Error: ' . $e->getMessage()];
         }
     }
 
@@ -88,7 +89,7 @@ class MarcaDAO {
             }
             return [false, "Sem resultados. "];
         } catch(PDOException $e) {
-            return [false, 'Error: ' . $e->getMessage())];
+            return [false, 'Error: ' . $e->getMessage()];
         }
     }
 }
