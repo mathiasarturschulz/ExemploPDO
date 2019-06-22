@@ -10,10 +10,11 @@ class MarcaDAO {
     const TIPO_NUMERO = 1;
     const TIPO_STRING = 2;
 
-    const OPERADOR_MAIOR      = 1;
-    const OPERADOR_MAIORIGUAL = 2;
-    const OPERADOR_MENOR      = 3;
-    const OPERADOR_MENORIGUAL = 4;
+    const OPERADOR_IGUAL = "=";
+    const OPERADOR_MAIOR      = ">";
+    const OPERADOR_MAIORIGUAL = ">=";
+    const OPERADOR_MENOR      = "<";
+    const OPERADOR_MENORIGUAL = "<=";
  
     public function insert(Marca $marca)
     {
@@ -79,16 +80,24 @@ class MarcaDAO {
         try {
             if ($campoBusca && $tipo && $valorBusca) {
                 // POSSUI PARAMETROS
+                $op = self::OPERADOR_IGUAL;
                 if ($tipo == self::TIPO_NUMERO) {
+                    if ($operador == self::OPERADOR_MAIOR
+                        || $operador == self::OPERADOR_MAIORIGUAL
+                        || $operador == self::OPERADOR_MENOR
+                        || $operador == self::OPERADOR_MENORIGUAL) {
+                        $op = $operador;
+                    }
                     $sql = ""
-                        . "SELECT * FROM marca WHERE " . $campoBusca . " = :valor";
+                        . "SELECT * FROM marca WHERE " . $campoBusca . " " . $op .  " :valor";
+                    $valor = $valorBusca;
                 } elseif ($tipo == self::TIPO_STRING) {
                     $sql = ""
                         . "SELECT * FROM marca WHERE " . $campoBusca . " LIKE :valor";
+                    $valor = "%" . $valorBusca . "%";
                 }
                 $pdo = Conexao::startConnection();
                 $stmt = $pdo->prepare($sql);
-                $valor = "%" . $valorBusca . "%";
                 $stmt->bindValue(':valor', $valor, PDO::PARAM_STR);
     
                 $stmt->execute();
