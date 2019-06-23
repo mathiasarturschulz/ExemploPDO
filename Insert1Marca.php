@@ -2,9 +2,6 @@
 
 require_once "autoload.php";
 
-echo ("TESTE INSERIR");
-
-
 echo ("\n\nTESTE INSERIR MARCA NO DB");
 $oMarcaDAO = new MarcaDAO();
 
@@ -25,5 +22,3 @@ echo ("\n" . $oMarcaDAO->insert($oMarca)[1]);
 
 $oMarca = (new Marca())->setDescricao('Microsoft');
 echo ("\n" . $oMarcaDAO->insert($oMarca)[1]);
-
-

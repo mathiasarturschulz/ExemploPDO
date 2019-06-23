@@ -2,8 +2,6 @@
 
 require_once "autoload.php";
 
-echo ("TESTE ATUALIZAR");
-
 echo ("\n\nTESTE ATUALIZAR MARCA NO DB");
 $oMarcaDAO = new MarcaDAO();
 
@@ -12,5 +10,3 @@ echo ("\n" . $oMarcaDAO->update($oMarca)[1]);
 
 $oMarca = (new Marca())->setID(2)->setDescricao('Dell Corporation');
 echo ("\n" . $oMarcaDAO->update($oMarca)[1]);
-
-

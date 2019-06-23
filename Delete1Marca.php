@@ -2,9 +2,6 @@
 
 require_once "autoload.php";
 
-echo ("TESTE DELETAR");
-
-
 echo ("\n\nTESTE DELETAR MARCA NO DB");
 $oMarcaDAO = new MarcaDAO();
 

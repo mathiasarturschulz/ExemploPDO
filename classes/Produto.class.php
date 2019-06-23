@@ -9,15 +9,6 @@ class Produto {
     private $imagem;
     private $Marca;
 
-    public function __construct($id, $descricao, $valor, $estoque, $imagem, $Marca) {
-        $this->setId($id);
-        $this->setDescricao($descricao);
-        $this->setValor($valor);
-        $this->setEstoque($estoque);
-        $this->setImagem($imagem);
-        $this->setMarca($Marca);
-    }
-
     /**
      * Get the value of id
      */ 
@@ -133,18 +124,9 @@ class Produto {
      */ 
     public function setMarca($Marca)
     {
-        echo $this->validaMarca($Marca);
-        if ($this->validaMarca($Marca))
-            $this->Marca = $Marca;
-        else
-            $this->Marca = null;
-        return $this;
-    }
+        $this->Marca = $Marca;
 
-    public function validaMarca($Marca)
-    {
-        // ID NÃO PODE SER 0 (ZERO)
-        return ($Marca->getId() && $Marca->getDescricao()) ? true : false;
+        return $this;
     }
 
     public function __toString() {
