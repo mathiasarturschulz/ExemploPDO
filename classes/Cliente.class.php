@@ -14,24 +14,6 @@ class Cliente extends Pessoa {
     private $cidade;
     private $estado;
 
-    public function __construct(
-        $id, $nome, $usuario, $senha, $cpf, $rg, $fone, $email, 
-        $endereco, $numero, $bairro, $cidade, $estado) {
-        parent::setId($id);
-        parent::setNome($nome);
-        parent::setUsuario($usuario);
-        parent::setSenha($senha);
-        $this->setCpf($cpf);
-        $this->setRg($rg);
-        $this->setFone($fone);
-        $this->setEmail($email);
-        $this->setEndereco($endereco);
-        $this->setNumero($numero);
-        $this->setBairro($bairro);
-        $this->setCidade($cidade);
-        $this->setEstado($estado);
-    }
-
     /**
      * Get the value of cpf
      */ 
