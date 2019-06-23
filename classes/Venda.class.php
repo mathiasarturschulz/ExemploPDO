@@ -10,16 +10,6 @@ class Venda {
     private $dataPagamento;
     private $ListaVendaProdutos = [];
 
-    public function __construct($id, $data, $Cliente, $Vendedor, $dataVencimento, $dataPagamento, $ListaVendaProdutos) {
-        $this->setId($id);
-        $this->setData($data);
-        $this->setCliente($Cliente);
-        $this->setVendedor($Vendedor);
-        $this->setDataVencimento($dataVencimento);
-        $this->setDataPagamento($dataPagamento);
-        $this->setListaVendaProdutos($ListaVendaProdutos);
-    }
-
     /**
      * Get the value of id
      */ 

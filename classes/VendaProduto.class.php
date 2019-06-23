@@ -5,11 +5,6 @@ class VendaProduto {
     private $Produto;
     private $quantidadeProduto;
 
-    public function __construct($Produto, $quantidadeProduto) {
-        $this->setProduto($Produto);
-        $this->setQuantidadeProduto($quantidadeProduto);
-    }
-
     /**
      * Get the value of Produto
      */ 
