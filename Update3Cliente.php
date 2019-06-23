@@ -2,7 +2,7 @@
 
 require_once "autoload.php";
 
-echo ("\n\nTESTE UPDATE PRODUTO NO DB");
+echo ("\n\nTESTE UPDATE CLIENTE NO DB");
 $oClienteDAO = new ClienteDAO();
 
 $oCliente = (new Cliente())
